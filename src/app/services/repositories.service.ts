@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { RepoResponse } from 'src/app/models/repoResponse'
 import { environment } from 'src/environments/environment'
 import { BookmarkAction } from '../models/enums';
-import { IkeyValue } from '../models/iKeyValue';
 
 @Injectable({
   providedIn: 'root'
