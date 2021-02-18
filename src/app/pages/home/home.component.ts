@@ -26,17 +26,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    // Fake login on init
     this.authService.authUser('ikhilman@gmail.com', '123456')
       .subscribe(response => {
         this.token = response;
+        // Get stored bookmarks
         this.getBookmarks();
       });
   }
 
   ngAfterViewInit(): void {
+    // subscribe to enter key event
     this.searchInputSubscription = fromEvent(this.searchInput.nativeElement, 'keyup')
-      .pipe(filter((e: any) => e.key === 'Enter' && e.target.value))
+      .pipe(filter((e: any) => e.key === 'Enter' && e.target.value)) 
       .subscribe(x => {
+        // get repositories from server
         this.getRepos(this.searchInput.nativeElement.value);
       })
   }
@@ -52,8 +56,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async bookmarkRepository(id: number) {
     try {
+      // get bookmark action add/remove
       const bookMarkAction: BookmarkAction = this.bookmarksList[id] ? BookmarkAction.Remove : BookmarkAction.Add;
       await this.repoService.bookmarkRepository(id, this.token, bookMarkAction).toPromise();
+      // set seved bookmarks list 
       bookMarkAction === BookmarkAction.Add ? this.bookmarksList[id] = id : this.bookmarksList[id] = null;
     } catch (error) { console.error(error); }
   }
@@ -65,7 +71,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.bookmarksList[item] = item;
         })
       })).toPromise()
-
   }
 
   ngOnDestroy(): void {
