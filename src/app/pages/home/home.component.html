@@ -1,0 +1,24 @@
+<div class="input-group input-group-md">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Search Repository</span>
+    </div>
+    <input type="text" #searchInput class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+  </div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4" *ngFor="let repo of reposSearchResult">
+            <div class="card">
+                <div class="avatar">
+                    <img [src]="repo.owner.avatar_url" alt="" />
+                </div>
+                <div class="content">
+                    <p>{{repo.full_name}}</p>
+                    <p><button type="button" (click)="bookmarkRepository(repo.id)" class="btn btn-primary">{{bookmarksList[repo.id] ? 'RemoveBookmark'
+                        :'BookMark'}}</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
